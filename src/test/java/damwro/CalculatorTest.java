@@ -38,6 +38,15 @@ public class CalculatorTest {
         //when
         //then
         assertEquals(calculator.add(value), 11);
-
     }
+
+    @Test
+    public void shouldAllowAddMoreThanTwoNumbers() {
+        //given
+        String values = "1,10,5,25,100";
+        //when
+        //then
+        assertEquals(calculator.add(values), 141);
+    }
+
 }

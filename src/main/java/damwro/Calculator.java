@@ -7,10 +7,11 @@ public class Calculator {
             return 0;
         }
         String[] splittedNumbers = numbers.split(",");
-        if (splittedNumbers.length == 2) {
-            return Integer.parseInt(splittedNumbers[0]) + Integer.parseInt(splittedNumbers[1]);
+        int result = 0;
+        for (String number : splittedNumbers) {
+            result += Integer.parseInt(number);
         }
-        return Integer.parseInt(numbers);
+        return result;
     }
 
 }
