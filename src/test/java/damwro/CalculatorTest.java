@@ -31,4 +31,13 @@ public class CalculatorTest {
         assertEquals(calculator.add(value), Integer.parseInt(value));
     }
 
+    @Test
+    public void shouldAddTwoNumbers() {
+        //given
+        String value = "1,10";
+        //when
+        //then
+        assertEquals(calculator.add(value), 11);
+
+    }
 }
