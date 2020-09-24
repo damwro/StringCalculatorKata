@@ -1,5 +1,6 @@
 package damwro;
 
+import damwro.exception.NoNumberAfterSeparatorException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldReturnZeroForEmptyString() {
+    public void shouldReturnZeroForEmptyString() throws NoNumberAfterSeparatorException {
         //given
         //when
         //then
@@ -23,7 +24,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldReturnValueWhenGivenNumber() {
+    public void shouldReturnValueWhenGivenNumber() throws NoNumberAfterSeparatorException {
         //given
         String value = "10";
         //when
@@ -32,7 +33,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldAddTwoNumbers() {
+    public void shouldAddTwoNumbers() throws NoNumberAfterSeparatorException {
         //given
         String value = "1,10";
         //when
@@ -41,7 +42,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldAllowAddMoreThanTwoNumbers() {
+    public void shouldAllowAddMoreThanTwoNumbers() throws NoNumberAfterSeparatorException {
         //given
         String values = "1,10,5,25,100";
         //when
@@ -50,11 +51,20 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldAllowAddNumbersSeparatedByNewLines() {
+    public void shouldAllowAddNumbersSeparatedByNewLines() throws NoNumberAfterSeparatorException {
         //given
         String values = "1\n2,3";
         //when
         //then
         assertEquals(calculator.add(values), 6);
+    }
+
+    @Test(expected = NoNumberAfterSeparatorException.class)
+    public void shouldThrowExceptionWhenNoNumberAfterSeparator() throws NoNumberAfterSeparatorException {
+        //given
+        String values = "1,\n";
+        //when
+        //then
+        assertEquals(calculator.add(values), 3);
     }
 }
