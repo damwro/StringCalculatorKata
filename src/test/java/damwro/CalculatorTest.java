@@ -49,4 +49,12 @@ public class CalculatorTest {
         assertEquals(calculator.add(values), 141);
     }
 
+    @Test
+    public void shouldAllowAddNumbersSeparatedByNewLines() {
+        //given
+        String values = "1\n2,3";
+        //when
+        //then
+        assertEquals(calculator.add(values), 6);
+    }
 }

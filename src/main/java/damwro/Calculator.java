@@ -6,7 +6,7 @@ public class Calculator {
         if (numbers.equals("")) {
             return 0;
         }
-        String[] splittedNumbers = numbers.split(",");
+        String[] splittedNumbers = numbers.split(",|\\n");
         int result = 0;
         for (String number : splittedNumbers) {
             result += Integer.parseInt(number);
