@@ -1,10 +1,15 @@
 package damwro;
 
+import damwro.exception.NegativeNotAllowedException;
 import damwro.exception.NoNumberAfterSeparatorException;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Calculator {
 
-    public int add(String numbers) throws NoNumberAfterSeparatorException {
+    public int add(String numbers) throws NoNumberAfterSeparatorException, NegativeNotAllowedException {
         //default value
         String separator = ",|\\n";
 
@@ -21,8 +26,9 @@ public class Calculator {
         return sumNumbers(numbers, separator);
     }
 
-    private int sumNumbers(String numbers, String separator) {
+    private int sumNumbers(String numbers, String separator) throws NegativeNotAllowedException {
         String[] splittedNumbers = numbers.split(separator);
+        validateNegatives(splittedNumbers);
         int result = 0;
         for (String number : splittedNumbers) {
             if (number.isEmpty()) {
@@ -31,6 +37,15 @@ public class Calculator {
             result += Integer.parseInt(number);
         }
         return result;
+    }
+
+    private void validateNegatives(String[] splittedNumbers) throws NegativeNotAllowedException {
+        List<String> negatives = Arrays.stream(splittedNumbers)
+                .filter(s -> Integer.parseInt(s) < 0)
+                .collect(Collectors.toList());
+        if (!negatives.isEmpty()) {
+            throw new NegativeNotAllowedException("Negative numbers are not allowed: " + negatives);
+        }
     }
 
     private void checkIsNumberAfterSeparator(String numbers) throws NoNumberAfterSeparatorException {
