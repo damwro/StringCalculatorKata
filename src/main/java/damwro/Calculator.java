@@ -28,12 +28,22 @@ public class Calculator {
 
     private int sumNumbers(String numbers, String separator) throws NegativeNotAllowedException {
         String[] splittedNumbers = numbers.split(separator);
-        validateNegatives(splittedNumbers);
+        String[] withoutEmptyValues = removeEmptyValues(splittedNumbers);
+        validateNegatives(withoutEmptyValues);
         int result = 0;
-        for (String number : splittedNumbers) {
-            if (number.isEmpty()) {
-                number = "0";
-            }
+        for (String number : withoutEmptyValues) {
+            result = sumBelow1000(result, number);
+        }
+        return result;
+    }
+
+    private String[] removeEmptyValues(String[] splittedNumbers) {
+        Object[] objects = Arrays.stream(splittedNumbers).filter(s -> !s.isEmpty()).toArray();
+        return Arrays.copyOf(objects, objects.length, String[].class);
+    }
+
+    private int sumBelow1000(int result, String number) {
+        if (Integer.parseInt(number) <= 1000) {
             result += Integer.parseInt(number);
         }
         return result;

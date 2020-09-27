@@ -104,4 +104,13 @@ public class CalculatorTest {
         //then
         assertEquals(calculator.add(values), 0);
     }
+
+    @Test
+    public void shouldIgnoreBiggerThan1000() throws NegativeNotAllowedException, NoNumberAfterSeparatorException {
+        //given
+        String values = "1,10,1001";
+        //when
+        //then
+        assertEquals(calculator.add(values), 11);
+    }
 }
