@@ -113,4 +113,13 @@ public class CalculatorTest {
         //then
         assertEquals(calculator.add(values), 11);
     }
+
+    @Test
+    public void shouldAcceptLongerSeparators() throws NegativeNotAllowedException, NoNumberAfterSeparatorException {
+        //given
+        String values = "//[***]\n1***2***3";
+        //when
+        //then
+        assertEquals(calculator.add(values), 6);
+    }
 }
