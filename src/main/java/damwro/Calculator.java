@@ -25,6 +25,9 @@ public class Calculator {
         String[] splittedNumbers = numbers.split(separator);
         int result = 0;
         for (String number : splittedNumbers) {
+            if (number.isEmpty()) {
+                number = "0";
+            }
             result += Integer.parseInt(number);
         }
         return result;

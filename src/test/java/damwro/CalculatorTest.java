@@ -86,4 +86,12 @@ public class CalculatorTest {
         assertEquals(calculator.add(values), 18);
     }
 
+    @Test
+    public void shouldHandleEmptyFirstLine() throws NoNumberAfterSeparatorException {
+        //given
+        String values = "\n1,5,5";
+        //when
+        //then
+        assertEquals(calculator.add(values), 11);
+    }
 }
