@@ -9,25 +9,49 @@ import java.util.stream.Collectors;
 
 public class Calculator {
 
+    private String numbersToCalculate;
+
     public int add(String numbers) throws NoNumberAfterSeparatorException, NegativeNotAllowedException {
-        //default value
-        String separator = ",|\\n";
 
         if (checkEmptyString(numbers)) {
             return 0;
         }
         checkIsNumberAfterSeparator(numbers);
 
-        if (numbers.substring(0, 2).equals("//")) {
-            separator = numbers.substring(2, numbers.indexOf("\n"));
-            numbers = numbers.substring(numbers.indexOf("\n") + 1);
-        }
+        String[] separators = getSeparators(numbers);
 
-        return sumNumbers(numbers, separator);
+        return sumNumbers(numbersToCalculate, separators);
     }
 
-    private int sumNumbers(String numbers, String separator) throws NegativeNotAllowedException {
-        String[] splittedNumbers = numbers.split(separator);
+    private String[] getSeparators(String numbers) {
+        String[] separators;
+        if (numbers.substring(0, 2).equals("//")) {
+            separators = prepareCustomSeparators(numbers);
+            numbersToCalculate = numbers.substring(numbers.indexOf("\n") + 1);
+        } else {
+            separators = new String[2];
+            separators[0] = ",";
+            separators[1] = "\n";
+            numbersToCalculate = numbers;
+        }
+        return separators;
+    }
+
+    private String[] prepareCustomSeparators(String numbers) {
+        String[] separators;
+        String allSeparators = numbers.substring(2, numbers.indexOf("\n"));
+        Object[] removedFirstElement = Arrays.stream(allSeparators.split("\\[")).filter(s -> !s.isEmpty()).toArray();
+        String[] delimiters = Arrays.copyOf(removedFirstElement, removedFirstElement.length, String[].class);
+        separators = new String[delimiters.length];
+
+        for (int i = 0; i < delimiters.length; i++) {
+            separators[i] = delimiters[i].replace("]", "");
+        }
+        return separators;
+    }
+
+    private int sumNumbers(String numbers, String[] separator) throws NegativeNotAllowedException {
+        String[] splittedNumbers = numbers.split(Arrays.toString(separator));
         String[] withoutEmptyValues = removeEmptyValues(splittedNumbers);
         validateNegatives(withoutEmptyValues);
         int result = 0;
