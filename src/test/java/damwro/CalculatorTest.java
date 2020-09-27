@@ -67,4 +67,23 @@ public class CalculatorTest {
         //then
         assertEquals(calculator.add(values), 3);
     }
+
+    @Test
+    public void shouldAcceptCustomDelimiters() throws NoNumberAfterSeparatorException {
+        //given
+        String values = "//:\n1:2:3";
+        //when
+        //then
+        assertEquals(calculator.add(values), 6);
+    }
+
+    @Test
+    public void shouldAcceptCustomDelimiterAA() throws NoNumberAfterSeparatorException {
+        //given
+        String values = "//AA\n1AA2AA15";
+        //when
+        //then
+        assertEquals(calculator.add(values), 18);
+    }
+
 }
