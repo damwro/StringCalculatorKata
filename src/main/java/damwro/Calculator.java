@@ -40,8 +40,10 @@ public class Calculator {
     private String[] prepareCustomSeparators(String numbers) {
         String[] separators;
         String allSeparators = numbers.substring(2, numbers.indexOf("\n"));
-        Object[] removedFirstElement = Arrays.stream(allSeparators.split("\\[")).filter(s -> !s.isEmpty()).toArray();
-        String[] delimiters = Arrays.copyOf(removedFirstElement, removedFirstElement.length, String[].class);
+        Object[] withoutEmptyFirstElement = Arrays.stream(allSeparators.split("\\["))
+                .filter(s -> !s.isEmpty())
+                .toArray();
+        String[] delimiters = Arrays.copyOf(withoutEmptyFirstElement, withoutEmptyFirstElement.length, String[].class);
         separators = new String[delimiters.length];
 
         for (int i = 0; i < delimiters.length; i++) {
@@ -62,7 +64,9 @@ public class Calculator {
     }
 
     private String[] removeEmptyValues(String[] splittedNumbers) {
-        Object[] objects = Arrays.stream(splittedNumbers).filter(s -> !s.isEmpty()).toArray();
+        Object[] objects = Arrays.stream(splittedNumbers)
+                .filter(s -> !s.isEmpty())
+                .toArray();
         return Arrays.copyOf(objects, objects.length, String[].class);
     }
 
@@ -89,7 +93,7 @@ public class Calculator {
     }
 
     private boolean checkEmptyString(String numbers) {
-        return numbers.equals("");
+        return numbers.equals("") || numbers.isEmpty();
     }
 
 }

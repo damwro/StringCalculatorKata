@@ -131,4 +131,14 @@ public class CalculatorTest {
         //then
         assertEquals(calculator.add(values), 6);
     }
+
+    @Test
+    public void shouldAllowMultipleLongerSeparators() throws NegativeNotAllowedException, NoNumberAfterSeparatorException {
+        //given
+        String values = "//[***][ABC]\n1ABC22***1000";
+        //when
+        //then
+        assertEquals(calculator.add(values), 1023);
+    }
+
 }
